@@ -32,9 +32,9 @@ header {
 
 .site-nav {
     width: 100%;
-    padding: 1% 0 0 7%;
+    padding: 1.5% 0 1.5% 7%;
     background-color: #fff;
-	border-bottom: 1px4px solid #38302e;
+	border-bottom: 2px solid #959595;
 }
 
 .handle {
