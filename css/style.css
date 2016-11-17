@@ -48,15 +48,19 @@ header {
 }
 
 .handle span {
-    font-family: "Droid Arabic Kufi","Open Sans","Helvetica Neue",Helvetica,Arial,sans-serif;    
+    font-family: "Droid Arabic Kufi","Open Sans","Helvetica Neue",Helvetica,Arial,sans-serif;
 }
 
 .site-nav-list {
-    display: none
+    height: 0;
+    opacity: 0;
+    visibility: hidden;
 }
 
 .showing {
-    display: block
+    height: auto;
+    opacity: 1;
+    visibility: visible;
 }
 
 .site-nav-list li {
@@ -90,7 +94,7 @@ header {
     padding: .5%;
     background-color: #fff;
     border: 1px solid #959595;
-    border-radius: 50%;    
+    border-radius: 50%;
 }
 
 .me-info h4 {
