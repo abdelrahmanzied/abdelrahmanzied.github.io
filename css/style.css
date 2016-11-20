@@ -39,12 +39,8 @@ header {
 
 .handle {
     font-size: 16px;
-    color: #494949;
+    color: #2a93d5;
     cursor: pointer;
-}
-
-.handle:hover {
-    color: #030303;
 }
 
 .handle span {
@@ -76,7 +72,7 @@ header {
 }
 
 .site-nav-list a:hover {
-    color: #030303;
+    color: #2a93d5;
     padding-left: 3%;
 }
 
@@ -110,4 +106,53 @@ header {
     color: #fff;
     font-weight: 300;
     letter-spacing: 1px;
+}
+
+.about {
+    width: 100%;
+    margin-top: 3%;
+}
+
+.special-h {
+    color: #2a93d5;
+}
+
+.special-h span {
+    font-family: "Droid Arabic Kufi","Open Sans","Helvetica Neue",Helvetica,Arial,sans-serif;
+}
+
+.about p {
+    color: #666
+}
+
+.features {
+    width: 100%;
+    margin-top: 3%;
+}
+
+.item {
+    width: 100%;
+    height: auto;
+    margin-top: 2%;
+}
+
+.item i, h4 {
+    width: 100%;
+    text-align: center;
+}
+
+.responsive-i {
+    color: #4d4d4d;
+}
+
+.code-i {
+    color: #3b46ab;
+}
+
+.idea-i {
+    color: #ffa500;
+}
+
+.heart-i {
+    color: #ff0000;
 }
