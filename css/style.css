@@ -115,6 +115,8 @@ header {
 
 .special-h {
     color: #2a93d5;
+    text-align: center;
+    padding-bottom: 3%;
 }
 
 .special-h span {
@@ -122,7 +124,8 @@ header {
 }
 
 .about p {
-    color: #666
+    color: #666;
+    font-weight: 300;
 }
 
 .features {
@@ -136,7 +139,7 @@ header {
     margin-top: 2%;
 }
 
-.item i, h4 {
+.item i, .item h4 {
     width: 100%;
     text-align: center;
 }
@@ -155,4 +158,67 @@ header {
 
 .heart-i {
     color: #ff0000;
+}
+
+.skills {
+    padding: 3% 0;
+    margin: 2% 0;
+    background-color: #282E3E; 
+}
+
+.skills .special-h {
+    font-size: 18px;
+    color: #fff;
+    font-weight: 300;
+    letter-spacing: 7px;
+}
+
+.skill {
+    width: 100%;
+    text-align: center;
+    margin: 0 auto;
+    padding-top: 2%;
+}
+
+.skill h4 {
+    display: inline-block;
+    font-weight: 300;
+    font-size: 18px;
+    color: #fff;
+}
+
+progress {
+    width: 100%;
+}
+
+progress::-webkit-progress-bar {
+    background: #eee;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.25) inset;
+}
+
+.project {
+    padding-bottom: 9%
+}
+
+.project-img {
+    width: 100%;
+}
+
+.project-img img {
+    width: 100%;
+    border-radius: 3px;
+}
+
+.project-info h4 {
+    color: #2a93d5;
+    font-weight: 300;
+    padding-right: 1%;
+    margin-right: 1%;
+    display: inline-block;
+}
+
+.project-info p {
+    font-size: 18px;
+    font-weight: lighter;
+    display: inline-block;
 }
