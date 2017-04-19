@@ -213,12 +213,15 @@ progress::-webkit-progress-bar {
     border-radius: 3px;
 }
 
-.project-info a {
-    color: #2a93d5;
+.project-info h4 {
     font-weight: 300;
     padding-right: 1%;
     margin-right: 1%;
     display: inline-block;
+}
+
+.project-info a {
+    color: #2a93d5;
 }
 
 .project-info a:hover {
@@ -394,4 +397,9 @@ progress::-webkit-progress-bar {
         text-align: left;
     }
 
+    .project-info p {
+        font-size: 18px;
+        font-weight: lighter;
+        display: inline-block;
+    }
 }
