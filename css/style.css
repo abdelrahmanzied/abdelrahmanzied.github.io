@@ -278,7 +278,7 @@ header {
     }
 
     .overlay {
-        background-color: transparent;
+        background-color: transparent; 
     }
 
     .me {
@@ -377,7 +377,7 @@ header {
     }
 
     .name {
-        font-size: 45px;
+        font-size: 39px;
     }
 
     .special-h {
