@@ -4,15 +4,7 @@ $(function () {
 
     'use strict';
 
-    $('header').height($(window).height());
-    $(window).resize(function() {
-    	$('header').height($(window).height());
-        
-        $('header .slider').each(function () {
-            $(this).css('paddingTop', ($(window).height() - $('header .slider').height()) / 3);
-        });
-    
-    });
+
     
     //end resize
 
