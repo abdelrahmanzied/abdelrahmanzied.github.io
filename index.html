@@ -135,32 +135,212 @@
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const robot = document.querySelector('.astronaut-float');
+            const leftEye = document.querySelector('circle[cx="110"]');
+            const rightEye = document.querySelector('circle[cx="150"]');
+            const smilePath = document.querySelector('path[d*="105 145"]');
             let mouseX = 0;
             let mouseY = 0;
-            
+            let lastExpression = 'normal';
+
+            // Add eyebrows to the robot face
+            const svg = document.querySelector('svg');
+            const leftEyebrow = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+            leftEyebrow.setAttribute('x1', '102');
+            leftEyebrow.setAttribute('y1', '105');
+            leftEyebrow.setAttribute('x2', '118');
+            leftEyebrow.setAttribute('y2', '105');
+            leftEyebrow.setAttribute('stroke', '#60a5fa');
+            leftEyebrow.setAttribute('stroke-width', '2');
+            leftEyebrow.setAttribute('opacity', '0.8');
+            leftEyebrow.setAttribute('id', 'leftEyebrow');
+            svg.appendChild(leftEyebrow);
+
+            const rightEyebrow = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+            rightEyebrow.setAttribute('x1', '142');
+            rightEyebrow.setAttribute('y1', '105');
+            rightEyebrow.setAttribute('x2', '158');
+            rightEyebrow.setAttribute('y2', '105');
+            rightEyebrow.setAttribute('stroke', '#60a5fa');
+            rightEyebrow.setAttribute('stroke-width', '2');
+            rightEyebrow.setAttribute('opacity', '0.8');
+            rightEyebrow.setAttribute('id', 'rightEyebrow');
+            svg.appendChild(rightEyebrow);
+
+            function updateFacialExpression(mouseX, mouseY, centerX, centerY) {
+                const distanceFromCenter = Math.sqrt(Math.pow(mouseX - centerX, 2) + Math.pow(mouseY - centerY, 2));
+                const maxDistance = Math.sqrt(Math.pow(centerX, 2) + Math.pow(centerY, 2));
+                const intensity = Math.min(distanceFromCenter / maxDistance, 1);
+
+                // Determine expression based on mouse position and movement
+                let expression = 'normal';
+                const horizontalPos = (mouseX - centerX) / centerX; // -1 to 1
+                const verticalPos = (mouseY - centerY) / centerY; // -1 to 1
+
+                if (Math.abs(horizontalPos) > 0.3) {
+                    if (horizontalPos > 0) {
+                        expression = 'wink_right';
+                    } else {
+                        expression = 'wink_left';
+                    }
+                } else if (verticalPos < -0.2) {
+                    expression = 'happy';
+                } else if (verticalPos > 0.2) {
+                    expression = 'code_face';
+                } else if (intensity > 0.5) {
+                    expression = 'excited';
+                }
+
+                // Update smile based on expression
+                if (smilePath) {
+                    switch(expression) {
+                        case 'happy':
+                            smilePath.setAttribute('d', 'M 105 145 Q 130 165 155 145'); // Big smile
+                            break;
+                        case 'excited':
+                            smilePath.setAttribute('d', 'M 105 143 Q 130 168 155 143'); // Very big smile
+                            break;
+                        case 'wink_right':
+                            smilePath.setAttribute('d', 'M 105 145 Q 125 160 145 145'); // Asymmetric smile
+                            break;
+                        case 'wink_left':
+                            smilePath.setAttribute('d', 'M 115 145 Q 135 160 155 145'); // Asymmetric smile
+                            break;
+                        case 'code_face':
+                            smilePath.setAttribute('d', 'M 110 145 L 120 145 M 140 145 L 150 145'); // < -> like expression
+                            break;
+                        default:
+                            smilePath.setAttribute('d', 'M 105 145 Q 130 155 155 145'); // Normal smile
+                    }
+                }
+
+                // Update eyebrows
+                const leftEyebrowEl = document.getElementById('leftEyebrow');
+                const rightEyebrowEl = document.getElementById('rightEyebrow');
+
+                if (leftEyebrowEl && rightEyebrowEl) {
+                    switch(expression) {
+                        case 'happy':
+                        case 'excited':
+                            leftEyebrowEl.setAttribute('y1', '102');
+                            leftEyebrowEl.setAttribute('y2', '102');
+                            rightEyebrowEl.setAttribute('y1', '102');
+                            rightEyebrowEl.setAttribute('y2', '102');
+                            break;
+                        case 'wink_right':
+                            leftEyebrowEl.setAttribute('y1', '105');
+                            leftEyebrowEl.setAttribute('y2', '105');
+                            rightEyebrowEl.setAttribute('y1', '100');
+                            rightEyebrowEl.setAttribute('y2', '108');
+                            break;
+                        case 'wink_left':
+                            leftEyebrowEl.setAttribute('y1', '100');
+                            leftEyebrowEl.setAttribute('y2', '108');
+                            rightEyebrowEl.setAttribute('y1', '105');
+                            rightEyebrowEl.setAttribute('y2', '105');
+                            break;
+                        case 'code_face':
+                            leftEyebrowEl.setAttribute('y1', '108');
+                            leftEyebrowEl.setAttribute('y2', '100');
+                            rightEyebrowEl.setAttribute('y1', '100');
+                            rightEyebrowEl.setAttribute('y2', '108');
+                            break;
+                        default:
+                            leftEyebrowEl.setAttribute('y1', '105');
+                            leftEyebrowEl.setAttribute('y2', '105');
+                            rightEyebrowEl.setAttribute('y1', '105');
+                            rightEyebrowEl.setAttribute('y2', '105');
+                    }
+                }
+
+                // Update eye shapes for winking
+                if (leftEye && rightEye) {
+                    switch(expression) {
+                        case 'wink_right':
+                            leftEye.setAttribute('r', '8');
+                            rightEye.setAttribute('r', '2'); // Wink
+                            break;
+                        case 'wink_left':
+                            leftEye.setAttribute('r', '2'); // Wink
+                            rightEye.setAttribute('r', '8');
+                            break;
+                        case 'happy':
+                        case 'excited':
+                            leftEye.setAttribute('r', '6'); // Squinting from happiness
+                            rightEye.setAttribute('r', '6');
+                            break;
+                        default:
+                            leftEye.setAttribute('r', '8');
+                            rightEye.setAttribute('r', '8');
+                    }
+                }
+
+                lastExpression = expression;
+            }
+
             document.addEventListener('mousemove', function(e) {
                 mouseX = e.clientX;
                 mouseY = e.clientY;
-                
+
                 // Get the center of the viewport
                 const centerX = window.innerWidth / 2;
                 const centerY = window.innerHeight / 2;
-                
-                // Calculate movement offset (limit the movement range)
+
+                // Calculate movement offset for the robot
                 const moveX = (mouseX - centerX) * 0.02;
                 const moveY = (mouseY - centerY) * 0.02;
                 const rotation = (mouseX - centerX) * 0.01;
-                
-                // Apply the transformation
+
                 if (robot) {
                     robot.style.transform = `translateX(${moveX}px) translateY(${moveY}px) rotate(${rotation}deg)`;
                 }
+
+                // Calculate movement offset for the eyes
+                const eyeMoveX = (mouseX - centerX) * 0.005;
+                const eyeMoveY = (mouseY - centerY) * 0.005;
+
+                if (leftEye) {
+                    leftEye.setAttribute('cx', 110 + eyeMoveX);
+                    leftEye.setAttribute('cy', 120 + eyeMoveY);
+                }
+
+                if (rightEye) {
+                    rightEye.setAttribute('cx', 150 + eyeMoveX);
+                    rightEye.setAttribute('cy', 120 + eyeMoveY);
+                }
+
+                // Update facial expressions
+                updateFacialExpression(mouseX, mouseY, centerX, centerY);
             });
-            
+
             // Reset position when mouse leaves the window
             document.addEventListener('mouseleave', function() {
                 if (robot) {
                     robot.style.transform = 'translateX(0px) translateY(0px) rotate(0deg)';
+                }
+
+                if (leftEye) {
+                    leftEye.setAttribute('cx', 110);
+                    leftEye.setAttribute('cy', 120);
+                    leftEye.setAttribute('r', '8');
+                }
+
+                if (rightEye) {
+                    rightEye.setAttribute('cx', 150);
+                    rightEye.setAttribute('cy', 120);
+                    rightEye.setAttribute('r', '8');
+                }
+
+                if (smilePath) {
+                    smilePath.setAttribute('d', 'M 105 145 Q 130 155 155 145');
+                }
+
+                const leftEyebrowEl = document.getElementById('leftEyebrow');
+                const rightEyebrowEl = document.getElementById('rightEyebrow');
+                if (leftEyebrowEl && rightEyebrowEl) {
+                    leftEyebrowEl.setAttribute('y1', '105');
+                    leftEyebrowEl.setAttribute('y2', '105');
+                    rightEyebrowEl.setAttribute('y1', '105');
+                    rightEyebrowEl.setAttribute('y2', '105');
                 }
             });
         });
